@@ -2,6 +2,18 @@
 
 Official PyTorch implementation of [**P4Q**](https://arxiv.org/abs/2409.17634).
 
+Low-bit post-training quantization (PTQ) is essential for deploying CLIP on resource-constrained devices, yet it often collapses image–text alignment and leads to severe zero-shot accuracy degradation. **P4Q** (*Prompt for Quantization*) tackles this multimodal gap by learning lightweight, quantization-aware prompts and adapters that realign the quantized student with a full-precision teacher—**without retraining the CLIP backbone**.
+
+**Why P4Q?**
+- **Restores multimodal alignment** under aggressive low-bit quantization (e.g., 4-bit W/A)
+- **Outperforms FP32 zero-shot CLIP** on CIFAR-100 with only a small prompt–adapter overhead
+- **Plug-and-play**: built on standard PTQ calibration, compatible with diverse observers and quantizers
+
+This repository releases:
+- A modular **CLIP PTQ toolkit** — observers, quantizers, and quantized layers with flexible W/A/Attention bit-widths
+- **End-to-end scripts** for P4Q training and evaluation (CIFAR-100, CLIP-ViT-B/32, 4-4-8)
+- **Pre-trained checkpoints** and a reproducible **PTQ baseline** for fair comparison with the paper
+
 > **P4Q: Learning to Prompt for Quantization in Low-Bit CLIP**  
 > Huixin Sun, Runqi Wang, Yanjing Li, Chang Gao, Liping Jing, Xiaolong Jiang, Yao Hu, Baochang Zhang, Xianbin Cao  
 > [arXiv:2409.17634](https://arxiv.org/abs/2409.17634)
@@ -18,9 +30,9 @@ Official PyTorch implementation of [**P4Q**](https://arxiv.org/abs/2409.17634).
   <em>Figure 2. P4Q framework: quantized CLIP (a) and teacher–student distillation (b).</em>
 </p>
 
-## CLIP PTQ Engine
+## CLIP PTQ Toolkit
 
-Built on [FQ-ViT](https://github.com/linyang-zhh/FQ-ViT)-style operators (`models/ptq/`):
+A modular quantization toolkit built on [FQ-ViT](https://github.com/linyang-zhh/FQ-ViT)-style operators (`models/ptq/`), supporting flexible calibration recipes and bit-width configurations:
 
 | Module | Support |
 |--------|---------|
@@ -58,18 +70,6 @@ pip install -r requirements.txt
 bash scripts/test_baseline.sh   # PTQ baseline
 bash scripts/test_p4q.sh        # P4Q evaluation
 bash scripts/train_p4q.sh       # train P4Q
-```
-
-## Project Layout
-
-```
-P4Q/
-├── main.py
-├── config.py
-├── models/{ptq,clip,clip_vit_quant.py,dq_qadapt_coop.py}
-├── figures/
-├── scripts/
-└── checkpoints/p4q/
 ```
 
 ## Citation
