@@ -1,0 +1,12 @@
+# PyTorch
+torch==1.12.1
+torchvision==0.13.1
+
+# CLIP tokenizer dependency (model code is vendored under models/clip/)
+ftfy
+regex
+tqdm
+
+# Common
+numpy<2
+Pillow

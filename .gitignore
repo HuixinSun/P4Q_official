@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.ipynb_checkpoints/
+*.log
+.DS_Store
+
+# Large artifacts (keep checkpoints/ and figures/ tracked)
+save/
+logs/
+
+# Dataset
+data/
