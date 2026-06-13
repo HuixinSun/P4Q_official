@@ -1,6 +1,6 @@
 # Checkpoints
 
-CIFAR-100 / CLIP-ViT-B/32 / 4-4-8 ([Table 1](https://arxiv.org/abs/2409.17634)).
+Pretrained P4Q weights for CIFAR-100, CLIP ViT-B/32, and 4-4-8 bit setting ([Table 1](https://arxiv.org/abs/2409.17634)).
 
 | Method | Top-1 | Top-5 | Size (MB) |
 |--------|-------|-------|-----------|
@@ -15,6 +15,6 @@ checkpoints/p4q/
 
 ```bash
 bash scripts/test_p4q.sh        # evaluate P4Q
-bash scripts/test_baseline.sh   # PTQ baseline (no ckpt needed)
+bash scripts/test_baseline.sh   # PTQ baseline (no checkpoint required)
 bash scripts/train_p4q.sh       # train from scratch
 ```
