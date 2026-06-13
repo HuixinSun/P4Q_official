@@ -1,25 +1,16 @@
-# P4Q: Learning to Prompt for Quantization in Low-Bit CLIP
+<h1 align="center">P4Q: Learning to Prompt for Quantization in Low-Bit CLIP</h1>
 
-<p align="center">
+<p align="center" style="font-size: 1.05em">
+  <strong>Huixin Sun, Runqi Wang, Yanjing Li, Chang Gao, Liping Jing, Xiaolong Jiang, Yao Hu, Baochang Zhang, Xianbin Cao</strong><br/>
   <a href="https://arxiv.org/abs/2409.17634"><img src="https://img.shields.io/badge/arXiv-2409.17634-b31b1b.svg" alt="arXiv"/></a>
 </p>
 
-<p align="center">
-  <b>Official PyTorch implementation of <a href="https://arxiv.org/abs/2409.17634">P4Q</a></b>
-</p>
+Official PyTorch implementation of [**P4Q**](https://arxiv.org/abs/2409.17634).
 
 **P4Q** (Prompt for Quantization) integrates Post-Training Quantization (PTQ) with Parameter-Efficient Fine-Tuning (PEFT) for efficient deployment of vision-language models. Learnable prompts mitigate domain gaps, low-bit adapters realign image and text features, and cosine-similarity distillation transfers knowledge from a full-precision teacher. Across thirteen datasets, P4Q consistently improves low-bit CLIP; for example, 8-bit P4Q on CLIP-ViT/B-32 achieves **66.94%** Top-1 on ImageNet with **4×** model compression.
 
 <p align="center">
-  <sub>
-    <b>P4Q: Learning to Prompt for Quantization in Low-Bit CLIP</b><br/>
-    Huixin Sun, Runqi Wang, Yanjing Li, Chang Gao, Liping Jing, Xiaolong Jiang, Yao Hu, Baochang Zhang, Xianbin Cao<br/>
-    <a href="https://arxiv.org/abs/2409.17634">arXiv:2409.17634</a>
-  </sub>
-</p>
-
-<p align="center">
-  <img src="figures/framework.png" width="880"/>
+  <img src="figures/framework.png" width="600"/>
   <br/>
   <em>P4Q framework. (a) Quantized CLIP. (b) Teacher and student distillation.</em>
 </p>
