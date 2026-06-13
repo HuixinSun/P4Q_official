@@ -1,14 +1,22 @@
 # P4Q: Learning to Prompt for Quantization in Low-Bit CLIP
 
-[![arXiv](https://img.shields.io/badge/arXiv-2409.17634-b31b1b.svg)](https://arxiv.org/abs/2409.17634)
+<p align="center">
+  <a href="https://arxiv.org/abs/2409.17634"><img src="https://img.shields.io/badge/arXiv-2409.17634-b31b1b.svg" alt="arXiv"/></a>
+</p>
 
-Official PyTorch implementation of [**P4Q**](https://arxiv.org/abs/2409.17634).
+<p align="center">
+  <b>Official PyTorch implementation of <a href="https://arxiv.org/abs/2409.17634">P4Q</a></b>
+</p>
 
-Large-scale pre-trained Vision-Language Models (VLMs) have demonstrated remarkable performance across various visual and multimodal tasks. However, deploying these models on downstream application platforms remains challenging due to computational demands and domain gaps. Quantization offers a promising solution by significantly reducing these costs, making VLMs more feasible for deployment in such environments. There are two prevailing paradigms: Quantization-Aware Training (QAT), which preserves model performance but incurs substantial training costs; and Post-Training Quantization (PTQ), which offers greater efficiency but introduces multimodal gaps and leads to performance degradation on downstream tasks. To reduce computational costs and bridge domain gaps, we propose the "Prompt for Quantization" (P4Q) by integrating PTQ with Parameter-Efficient Fine-Tuning (PEFT) techniques. P4Q compresses model parameters and activations via PTQ, introducing learnable prompts and low-bit adapters to enhance performance on downstream tasks. The learnable prompts embed downstream knowledge to mitigate domain gaps, while the low-bit adapters realign the distributions of image and text features, thereby mitigating multimodal gaps. We also introduce a distillation loss based on cosine similarity predictions to distill the quantized model using a full-precision teacher model. Extensive experiments on thirteen datasets demonstrate that P4Q significantly enhances the performance of low-bit CLIP while reducing deployment costs. For instance, an 8-bit P4Q compressed CLIP-ViT/B-32 achieves 66.94% Top-1 accuracy on ImageNet, surpassing the prompt fine-tuned full-precision counterpart by 2.24% while reducing model size by 4×.
+**P4Q** (Prompt for Quantization) integrates Post-Training Quantization (PTQ) with Parameter-Efficient Fine-Tuning (PEFT) for efficient deployment of vision-language models. Learnable prompts mitigate domain gaps, low-bit adapters realign image and text features, and cosine-similarity distillation transfers knowledge from a full-precision teacher. Across thirteen datasets, P4Q consistently improves low-bit CLIP; for example, 8-bit P4Q on CLIP-ViT/B-32 achieves **66.94%** Top-1 on ImageNet with **4×** model compression.
 
-> **P4Q: Learning to Prompt for Quantization in Low-Bit CLIP**  
-> Huixin Sun, Runqi Wang, Yanjing Li, Chang Gao, Liping Jing, Xiaolong Jiang, Yao Hu, Baochang Zhang, Xianbin Cao  
-> [arXiv:2409.17634](https://arxiv.org/abs/2409.17634)
+<p align="center">
+  <sub>
+    <b>P4Q: Learning to Prompt for Quantization in Low-Bit CLIP</b><br/>
+    Huixin Sun, Runqi Wang, Yanjing Li, Chang Gao, Liping Jing, Xiaolong Jiang, Yao Hu, Baochang Zhang, Xianbin Cao<br/>
+    <a href="https://arxiv.org/abs/2409.17634">arXiv:2409.17634</a>
+  </sub>
+</p>
 
 <p align="center">
   <img src="figures/framework.png" width="880"/>
