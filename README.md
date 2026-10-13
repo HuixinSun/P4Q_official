@@ -18,20 +18,11 @@ Official PyTorch implementation of [**P4Q**](https://dl.acm.org/doi/10.1145/3822
   <em>P4Q framework. (a) Quantized CLIP. (b) Teacher and student distillation.</em>
 </p>
 
-## Why P4Q?
+## Release
 
-- **Restores multimodal alignment** under aggressive low-bit quantization
-- **Outperforms FP32 zero-shot CLIP** with only a small prompt and adapter overhead
-- **Plug and play** on standard PTQ calibration, compatible with diverse observers and quantizers
-
-## What We Provide
-
-We provide a complete open-source stack for low-bit CLIP quantization research:
-
-- **CLIP PTQ Toolkit**: a modular quantization toolkit built on [FQ-ViT](https://github.com/linyang-zhh/FQ-ViT)-style operators (`models/ptq/`), supporting flexible calibration recipes and bit-width configurations
-- **P4Q learning pipeline**: quantization-aware prompt and adapter learning with teacher and student distillation
-- **End-to-end scripts**: training, evaluation, and PTQ baseline reproduction on CIFAR-100 with CLIP ViT-B/32
-- **Pretrained checkpoints** matching the paper results in Table 1 (CIFAR-100, CLIP ViT-B/32, 4-4-8): `p4q_prompt_learner.pth` (learnable prompt) and `p4q_adapter.pth` (low-bit adapter)
+- P4Q implementation and CLIP PTQ toolkit
+- Training and evaluation scripts
+- Pretrained P4Q checkpoints for CIFAR-100 with CLIP ViT-B/32 (4-4-8)
 
 ## CLIP PTQ Toolkit
 
