@@ -8,42 +8,21 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-9333ea?style=flat-square" alt="License"/></a>
 </p>
 
-Official PyTorch implementation of [**P4Q**](https://dl.acm.org/doi/10.1145/3822594).
-
-**P4Q** (Prompt for Quantization) integrates Post-Training Quantization (PTQ) with Parameter-Efficient Fine-Tuning (PEFT) for efficient deployment of vision-language models. Learnable prompts mitigate domain gaps, low-bit adapters realign image and text features, and cosine-similarity distillation transfers knowledge from a full-precision teacher. Across thirteen datasets, P4Q consistently improves low-bit CLIP; for example, 8-bit P4Q on CLIP-ViT/B-32 achieves **66.94%** Top-1 on ImageNet with **4×** model compression.
+Official PyTorch implementation of [**P4Q**](https://dl.acm.org/doi/10.1145/3822594), a prompt-based framework for low-bit CLIP quantization.
 
 <p align="center">
   <img src="figures/framework.png" width="600"/>
-  <br/>
-  <em>P4Q framework. (a) Quantized CLIP. (b) Teacher and student distillation.</em>
 </p>
 
 ## Release
 
-- P4Q implementation and CLIP PTQ toolkit
+- P4Q and CLIP PTQ implementation
 - Training and evaluation scripts
-- Pretrained P4Q checkpoints for CIFAR-100 with CLIP ViT-B/32 (4-4-8)
+- Pretrained [checkpoints](checkpoints/p4q/) for CIFAR-100 with CLIP ViT-B/32 (4-4-8)
 
-## CLIP PTQ Toolkit
+## Results
 
-Key components:
-
-| Module | Options |
-|--------|---------|
-| **Observers** | MinMax, EMA, OMSE, Percentile, PTF |
-| **Quantizers** | Uniform, Log2 (LIS softmax) |
-| **Q-layers** | `QLinear`, `QConv2d`, `QAct`, `QMultiheadAttention`, `QIntLayerNorm`, `QIntSoftmax` |
-| **Bit-width** | `--bit_type {8,4,3,2}` for weight and activation; 8-bit attention |
-
-Default recipe for CIFAR-100 under the 4-4-8 setting: MinMax channel-wise weight quantization, OMSE activation quantization, and 8-bit attention.
-
-```bash
-python main.py --model ViT-B/32 --db_name cifar100 --root ./data \
-    --quant --bit_type 4 \
-    --calib-iter 10 --zeroshot_prompt --val_quant --num-workers 0
-```
-
-## Released Results (CIFAR-100, ViT-B/32, 4-4-8)
+CIFAR-100 with CLIP ViT-B/32 (4-4-8):
 
 | Method | Top-1 | Top-5 |
 |--------|-------|-------|
@@ -51,26 +30,14 @@ python main.py --model ViT-B/32 --db_name cifar100 --root ./data \
 | PTQ baseline (OMSE) | 46.05 | 74.47 |
 | **P4Q** | **69.20** | **91.26** |
 
-The released checkpoints reproduce the P4Q result above:
-
-| Checkpoint | Component | Role |
-|------------|-----------|------|
-| `p4q_prompt_learner.pth` | Learnable prompt | Embeds downstream knowledge to mitigate domain gaps |
-| `p4q_adapter.pth` | Low-bit adapter | Realigns image and text feature distributions |
-
-Load both files from [`checkpoints/p4q/`](checkpoints/p4q/) and run `bash scripts/test_p4q.sh` for evaluation.
-
 ## Quick Start
 
 ```bash
 conda create -n p4q python=3.10 -y && conda activate p4q
 pip install -r requirements.txt
-
-# Place CIFAR-100 under data/cifar-100-python/{meta,train,test}
-
-bash scripts/test_baseline.sh   # PTQ baseline
-bash scripts/test_p4q.sh        # P4Q evaluation
-bash scripts/train_p4q.sh       # train P4Q
+bash scripts/test_baseline.sh
+bash scripts/test_p4q.sh
+bash scripts/train_p4q.sh
 ```
 
 ## Citation
@@ -85,10 +52,6 @@ bash scripts/train_p4q.sh       # train P4Q
   doi       = {10.1145/3822594}
 }
 ```
-
-## Acknowledgements
-
-[CLIP](https://github.com/openai/CLIP), [CoOp](https://github.com/KaiyangZhou/CoOp), [CLIP-Adapter](https://github.com/gaopengcuhk/CLIP-Adapter), and [FQ-ViT](https://github.com/linyang-zhh/FQ-ViT).
 
 ## License
 
