@@ -8,21 +8,23 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-9333ea?style=flat-square" alt="License"/></a>
 </p>
 
-Official PyTorch implementation of [**P4Q**](https://dl.acm.org/doi/10.1145/3822594), a prompt-based framework for low-bit CLIP quantization.
+Official PyTorch implementation of [**P4Q: Learning to Prompt for Quantization in Low-Bit CLIP**](https://dl.acm.org/doi/10.1145/3822594).
+
+P4Q integrates Post-Training Quantization (PTQ) with Parameter-Efficient Fine-Tuning (PEFT) to reduce computational costs and bridge domain gaps. It introduces learnable prompts to embed downstream knowledge, low-bit adapters to realign image and text feature distributions, and a distillation loss based on cosine similarity predictions to transfer knowledge from a full-precision teacher model.
 
 <p align="center">
-  <img src="figures/framework.png" width="600"/>
+  <img src="figures/framework.png" width="880"/>
+  <br/>
+  <em>Overview of P4Q. The blue and green parts represent the visual and textual streams, respectively, and the trainable parameters are marked by the fire icon. QFC denotes a quantized fully connected layer. (a) Quantized CLIP. (b) Knowledge distillation.</em>
 </p>
 
-## Release
+## Released Code and Results
 
 - P4Q and CLIP PTQ implementation
 - Training and evaluation scripts
 - Pretrained [checkpoints](checkpoints/p4q/) for CIFAR-100 with CLIP ViT-B/32 (4-4-8)
 
-## Results
-
-CIFAR-100 with CLIP ViT-B/32 (4-4-8):
+Results on CIFAR-100 with CLIP ViT-B/32 under the 4-4-8 setting:
 
 | Method | Top-1 | Top-5 |
 |--------|-------|-------|
@@ -30,18 +32,16 @@ CIFAR-100 with CLIP ViT-B/32 (4-4-8):
 | PTQ baseline (OMSE) | 46.05 | 74.47 |
 | **P4Q** | **69.20** | **91.26** |
 
-## Quick Start
+## Reproduction
 
-### 1. Environment
+**Environment.**
 
 ```bash
 conda create -n p4q python=3.10 -y && conda activate p4q
 pip install -r requirements.txt
 ```
 
-### 2. Dataset
-
-Download the CIFAR-100 Python dataset and extract it as follows:
+**Dataset.** Download the CIFAR-100 Python dataset and extract it to:
 
 ```text
 data/cifar-100-python/
@@ -52,34 +52,28 @@ data/cifar-100-python/
 
 Use `DATA_ROOT=/path/to/data` if the dataset is stored elsewhere.
 
-### 3. Evaluation
-
-Evaluate the 4-bit PTQ baseline:
+**Evaluation.** Run the PTQ baseline under the 4-4-8 setting:
 
 ```bash
 bash scripts/test_baseline.sh
 ```
 
-This reproduces the PTQ baseline in the table above (46.05 Top-1 and 74.47 Top-5).
-
-Evaluate P4Q using the released `p4q_prompt_learner.pth` and `p4q_adapter.pth` in `checkpoints/p4q/`:
+This reproduces **46.05 Top-1** and **74.47 Top-5**. To evaluate P4Q, the following command loads `p4q_prompt_learner.pth` and `p4q_adapter.pth` from `checkpoints/p4q/`:
 
 ```bash
 bash scripts/test_p4q.sh
 ```
 
-This reproduces the P4Q result (69.20 Top-1 and 91.26 Top-5).
+This reproduces **69.20 Top-1** and **91.26 Top-5**.
 
-### 4. Training
-
-Train P4Q from scratch and save the checkpoints to a separate directory:
+**Training.** Train P4Q from scratch, then evaluate the resulting checkpoints:
 
 ```bash
 SAVE_DIR=checkpoints/p4q_retrained bash scripts/train_p4q.sh
 CKPT_DIR=checkpoints/p4q_retrained bash scripts/test_p4q.sh
 ```
 
-Set `CUDA_VISIBLE_DEVICES=<GPU_ID>` to select a GPU.
+Use `CUDA_VISIBLE_DEVICES=<GPU_ID>` to select a GPU.
 
 ## Citation
 
