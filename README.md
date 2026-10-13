@@ -32,13 +32,54 @@ CIFAR-100 with CLIP ViT-B/32 (4-4-8):
 
 ## Quick Start
 
+### 1. Environment
+
 ```bash
 conda create -n p4q python=3.10 -y && conda activate p4q
 pip install -r requirements.txt
-bash scripts/test_baseline.sh
-bash scripts/test_p4q.sh
-bash scripts/train_p4q.sh
 ```
+
+### 2. Dataset
+
+Download the CIFAR-100 Python dataset and extract it as follows:
+
+```text
+data/cifar-100-python/
+├── meta
+├── train
+└── test
+```
+
+Use `DATA_ROOT=/path/to/data` if the dataset is stored elsewhere.
+
+### 3. Evaluation
+
+Evaluate the 4-bit PTQ baseline:
+
+```bash
+bash scripts/test_baseline.sh
+```
+
+This reproduces the PTQ baseline in the table above (46.05 Top-1 and 74.47 Top-5).
+
+Evaluate P4Q using the released `p4q_prompt_learner.pth` and `p4q_adapter.pth` in `checkpoints/p4q/`:
+
+```bash
+bash scripts/test_p4q.sh
+```
+
+This reproduces the P4Q result (69.20 Top-1 and 91.26 Top-5).
+
+### 4. Training
+
+Train P4Q from scratch and save the checkpoints to a separate directory:
+
+```bash
+SAVE_DIR=checkpoints/p4q_retrained bash scripts/train_p4q.sh
+CKPT_DIR=checkpoints/p4q_retrained bash scripts/test_p4q.sh
+```
+
+Set `CUDA_VISIBLE_DEVICES=<GPU_ID>` to select a GPU.
 
 ## Citation
 

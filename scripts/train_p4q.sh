@@ -31,7 +31,7 @@ run_stage() {
         --coop_epochs "${epochs}" \
         --adapter_epochs "${epochs}" \
         --save_path "${SAVE_DIR}" \
-        --save_freq 10 \
+        --save_freq "${epochs}" \
         --val_quant \
         --num-workers 0 \
         --devices 1 \
